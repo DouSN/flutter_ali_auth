@@ -16,7 +16,7 @@
 #define TX_Alert_HORIZONTAL_NAV_BAR_HEIGHT      41.0
 
 //竖屏弹窗
-#define TX_Alert_Default_Left_Padding         42
+#define TX_Alert_Default_Left_Padding         21
 #define TX_Alert_Default_Top_Padding          115
 
 /**横屏弹窗*/
@@ -754,6 +754,7 @@
   model.privacyOne = [[viewConfig stringValueForKey: @"appPrivacyOne" defaultValue: nil] componentsSeparatedByString:@","];
   model.privacyTwo = [[viewConfig stringValueForKey: @"appPrivacyTwo" defaultValue: nil] componentsSeparatedByString:@","];
   NSArray *privacyColors = [[viewConfig stringValueForKey: @"appPrivacyColor" defaultValue: nil] componentsSeparatedByString:@","];
+
   if(privacyColors != nil && privacyColors.count > 1){
     model.privacyColors = @[
       [self colorWithHexString: privacyColors[0] alpha: 1],
@@ -770,6 +771,7 @@
   
   // 勾选统一按钮
   BOOL checkStatus = [viewConfig boolValueForKey: @"checkBoxHidden" defaultValue: NO];
+  model.checkBoxIsChecked = [viewConfig boolValueForKey: @"privacyState" defaultValue: YES];
   model.checkBoxIsHidden = checkStatus;
   if (!checkStatus) {
     UIImage* unchecked = [self changeUriPathToImage: [viewConfig stringValueForKey: @"uncheckedImgPath" defaultValue: nil]];
@@ -816,12 +818,12 @@
             alertX = ratio * TX_Alert_Horizontal_Default_Left_Padding;
             alertWidth = screenSize.width - alertX * 2;
             alertY = (screenSize.height - alertWidth * 0.5) * 0.5;
-            alertHeight = screenSize.height - 2 * alertY;
+            alertHeight = screenSize.width;
         } else {
             alertX = TX_Alert_Default_Left_Padding * ratio;
             alertWidth = screenSize.width - alertX * 2;
             alertY = TX_Alert_Default_Top_Padding * ratio;
-            alertHeight = screenSize.height - alertY * 2;
+            alertHeight = screenSize.width;
         }
         return CGRectMake(alertX, alertY, alertWidth, alertHeight);
     };
